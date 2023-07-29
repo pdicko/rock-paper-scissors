@@ -57,29 +57,48 @@ function game () {
   let wins = 0;
   let losses = 0;
 
-  for (let i  = 1; i <= 5; i++) {
-    const playerSelection = prompt("Rock, Paper, or Scissors?").toLowerCase();
-    console.log(playerSelection);
-    const computerSelection = getComputerChoice();
-    let roundData = playRound(playerSelection, computerSelection);
+  const playerSelection = prompt("Rock, Paper, or Scissors?").toLowerCase();
+  console.log(playerSelection);
+  const computerSelection = getComputerChoice();
+  let roundData = playRound(playerSelection, computerSelection);
 
-    switch (roundData.result) {
-      case "win":
-        ++wins;
-        break;
-      
-      case "lose":
-        ++losses;
-        break;
-
-      case "draw":
-      default:
+  switch (roundData.result) {
+    case "win":
+      ++wins;
       break;
-    }
+    
+    case "lose":
+      ++losses;
+      break;
 
-    console.log(roundData.message);
+    case "draw":
+    default:
+    break;
   }
 
+  // for (let i  = 1; i <= 5; i++) {
+  //   const playerSelection = prompt("Rock, Paper, or Scissors?").toLowerCase();
+  //   console.log(playerSelection);
+  //   const computerSelection = getComputerChoice();
+  //   let roundData = playRound(playerSelection, computerSelection);
+
+  //   switch (roundData.result) {
+  //     case "win":
+  //       ++wins;
+  //       break;
+      
+  //     case "lose":
+  //       ++losses;
+  //       break;
+
+  //     case "draw":
+  //     default:
+  //     break;
+  //   }
+
+  //   console.log(roundData.message);
+  // }
+  
   console.log("FINAL SCORE");
   console.log(`You: ${wins}`);
   console.log(`Computer: ${losses}`);
