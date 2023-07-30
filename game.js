@@ -1,11 +1,22 @@
 // game.js
 
-const playButton = document.querySelector('.play-button');
-playButton.addEventListener('click', loadGame);
+window.onload = function() {
+
+  const playButton = document.querySelector('.buttons > .play');
+  playButton.addEventListener('click', loadGame);
+}
 
 function loadGame() {
 
+  const scoreBox = document.querySelector('.score-box');
+
+  const playButton = document.querySelector('.buttons > .play');
+  const gameButtons = document.querySelectorAll('.buttons > .game');
+
+  scoreBox.classList.toggle('hidden');
+  playButton.classList.toggle('hidden');
   
+  gameButtons.forEach((button) => {button.classList.toggle('hidden')})
 
 }
 
@@ -112,5 +123,3 @@ function game () {
   console.log(`You: ${wins}`);
   console.log(`Computer: ${losses}`);
 }
-
-game();
