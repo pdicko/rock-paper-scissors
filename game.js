@@ -1,5 +1,14 @@
 // game.js
 
+const playButton = document.querySelector('.play-button');
+playButton.addEventListener('click', loadGame);
+
+function loadGame() {
+
+  
+
+}
+
 function getComputerChoice () {
 
   let choices = ['rock', 'paper', 'scissors'];
