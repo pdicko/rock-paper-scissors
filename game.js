@@ -6,30 +6,33 @@ window.onload = function() {
   playButton.addEventListener('click', loadGame);
 }
 
+let playerScore = 0;
+let computerScore = 0;
+
+
 function loadGame() {
 
   const scoreBox = document.querySelector('.score-box');
   const playButton = document.querySelector('.buttons > .play');
-  
 
   scoreBox.classList.toggle('hidden');
   playButton.classList.toggle('hidden');
-  toggleGameButtons()
 
-  game();
-
+  loadRound();
 }
 
-function toggleGameButtons() {
+function loadRound() {
 
   const gameButtons = document.querySelectorAll('.buttons > .game');
 
   gameButtons.forEach((button) => {
     button.classList.toggle('hidden');
-  })
-
+    button.addEventListener('click', (e) => {
+      const playerChoice = e.target.id;
+      playRound(playerChoice);
+    }, {once: true})
+  });
 }
-
 
 function getComputerChoice () {
 
@@ -38,19 +41,10 @@ function getComputerChoice () {
   return choices[i];
 }
 
-function playRound() {
+function playRound(playerChoice) {
 
-  let player = '';
-
-  const gameButtons = document.querySelectorAll('.buttons > .game');
-  gameButtons.forEach((button) => {
-    button.addEventListener('click', (e) => {
-      player = e.target.id;
-    })
-  })
-
+  const player = playerChoice;
   const computer = getComputerChoice();
-  // const player = playerSelection;
   const selections = [player, computer];
 
   let result = "";
@@ -62,7 +56,6 @@ function playRound() {
       message = `It's a draw. You both played ${player}`;
 
   } else {
-      
 
       let selectionsAsString = selections.toString();
 
@@ -84,15 +77,13 @@ function playRound() {
       default:
         break;
     }
-
-    console.log(player);
-    console.log(computer);
   }
 
-
+  updateGame(result);
+  displayResults(message);
 }
 
-function displayResults(result, message) {
+function displayResults(message) {
 
   const resultsDiv = document.querySelector('.results');
   const resultMessage = document.createElement('p');
@@ -101,22 +92,25 @@ function displayResults(result, message) {
   resultMessage.textContent = message;
 
   resultsDiv.appendChild(resultMessage);
+
+  const nextRoundButton = document.createElement('button')
   resultsDiv.classList.toggle('hidden');
 }
 
-function game () {
+function reset() {
+  const resultsDiv = document.querySelector('.results');
+  const resultMessage = document.createElement('p');
 
-  let playerScore = 0;
-  let computerScore = 0;
-  // let playerSelection = '';
-  let roundResult = '';
+  resultsDiv.removeChild(resultMessage);
 
-  // const gameButtons = document.querySelectorAll('.buttons > .game');
-  // gameButtons.forEach((button) => {
-  //   playerSelection = button.addEventListener('click', (e) => {
-  //     playRound(e.target.id);
-  //   })
-  // })
+  
+
+  loadRound();
+}
+
+function updateGame (result) {
+
+  let roundResult = result;
 
   switch (roundResult) {
     case "win":
@@ -132,26 +126,7 @@ function game () {
     break;
   }
 
-  // for (let i  = 1; i <= 5; i++) {
-  //   const playerSelection = prompt("Rock, Paper, or Scissors?").toLowerCase();
-  //   console.log(playerSelection);
-  //   const computerSelection = getComputerChoice();
-  //   let roundData = playRound(playerSelection, computerSelection);
-
-  //   switch (roundData.result) {
-  //     case "win":
-  //       ++wins;
-  //       break;
-      
-  //     case "lose":
-  //       ++losses;
-  //       break;
-
-  //     case "draw":
-  //     default:
-  //     break;
-  //   }
-
-  //   console.log(roundData.message);
-  // }
+  console.log(roundResult);
+  console.log(playerScore);
+  console.log(computerScore);
 }
