@@ -9,16 +9,27 @@ window.onload = function() {
 function loadGame() {
 
   const scoreBox = document.querySelector('.score-box');
-
   const playButton = document.querySelector('.buttons > .play');
-  const gameButtons = document.querySelectorAll('.buttons > .game');
+  
 
   scoreBox.classList.toggle('hidden');
   playButton.classList.toggle('hidden');
-  
-  gameButtons.forEach((button) => {button.classList.toggle('hidden')})
+  toggleGameButtons()
+
+  game();
 
 }
+
+function toggleGameButtons() {
+
+  const gameButtons = document.querySelectorAll('.buttons > .game');
+
+  gameButtons.forEach((button) => {
+    button.classList.toggle('hidden');
+  })
+
+}
+
 
 function getComputerChoice () {
 
@@ -27,11 +38,21 @@ function getComputerChoice () {
   return choices[i];
 }
 
-function playRound(playerSelection, computerSelection) {
+function playRound() {
 
-  let selections = [playerSelection.toLowerCase(), computerSelection];
-  let player = selections[0];
-  let computer = selections[1];
+  let player = '';
+
+  const gameButtons = document.querySelectorAll('.buttons > .game');
+  gameButtons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      player = e.target.id;
+    })
+  })
+
+  const computer = getComputerChoice();
+  // const player = playerSelection;
+  const selections = [player, computer];
+
   let result = "";
   let message = "";
   
@@ -44,7 +65,6 @@ function playRound(playerSelection, computerSelection) {
       
 
       let selectionsAsString = selections.toString();
-      console.log(selectionsAsString);
 
       switch (selectionsAsString) {
         case "rock,scissors":
@@ -64,31 +84,47 @@ function playRound(playerSelection, computerSelection) {
       default:
         break;
     }
+
+    console.log(player);
+    console.log(computer);
   }
 
-  const roundData = {result, message};
 
-  return roundData;
 }
 
+function displayResults(result, message) {
+
+  const resultsDiv = document.querySelector('.results');
+  const resultMessage = document.createElement('p');
+  resultMessage.classList.toggle('message');
+
+  resultMessage.textContent = message;
+
+  resultsDiv.appendChild(resultMessage);
+  resultsDiv.classList.toggle('hidden');
+}
 
 function game () {
 
-  let wins = 0;
-  let losses = 0;
+  let playerScore = 0;
+  let computerScore = 0;
+  // let playerSelection = '';
+  let roundResult = '';
 
-  const playerSelection = prompt("Rock, Paper, or Scissors?").toLowerCase();
-  console.log(playerSelection);
-  const computerSelection = getComputerChoice();
-  let roundData = playRound(playerSelection, computerSelection);
+  // const gameButtons = document.querySelectorAll('.buttons > .game');
+  // gameButtons.forEach((button) => {
+  //   playerSelection = button.addEventListener('click', (e) => {
+  //     playRound(e.target.id);
+  //   })
+  // })
 
-  switch (roundData.result) {
+  switch (roundResult) {
     case "win":
-      ++wins;
+      ++playerScore;
       break;
     
     case "lose":
-      ++losses;
+      ++computerScore;
       break;
 
     case "draw":
@@ -118,8 +154,4 @@ function game () {
 
   //   console.log(roundData.message);
   // }
-  
-  console.log("FINAL SCORE");
-  console.log(`You: ${wins}`);
-  console.log(`Computer: ${losses}`);
 }
