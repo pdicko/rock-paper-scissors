@@ -3,7 +3,7 @@
 window.onload = function() {
 
   const playButton = document.querySelector('.buttons > .play');
-  playButton.addEventListener('click', loadGame);
+  playButton.addEventListener('click', loadGame, {once: true});
 }
 
 let playerScore = 0;
@@ -24,14 +24,20 @@ function loadGame() {
 function loadRound() {
 
   const gameButtons = document.querySelectorAll('.buttons > .game');
-
+  
   gameButtons.forEach((button) => {
-    button.classList.toggle('hidden');
     button.addEventListener('click', (e) => {
       const playerChoice = e.target.id;
       playRound(playerChoice);
-    }, {once: true})
+    })
   });
+
+  toggleGameButtons();
+}
+
+function toggleGameButtons() {
+  const gameButtons = document.querySelectorAll('.buttons > .game');
+  gameButtons.forEach((button) => {button.classList.toggle('hidden')});
 }
 
 function getComputerChoice () {
@@ -42,6 +48,8 @@ function getComputerChoice () {
 }
 
 function playRound(playerChoice) {
+  
+  toggleGameButtons();
 
   const player = playerChoice;
   const computer = getComputerChoice();
@@ -49,7 +57,7 @@ function playRound(playerChoice) {
 
   let result = "";
   let message = "";
-  
+
 
   if (player === computer) {
       result = "draw";
@@ -86,24 +94,19 @@ function playRound(playerChoice) {
 function displayResults(message) {
 
   const resultsDiv = document.querySelector('.results');
-  const resultMessage = document.createElement('p');
-  resultMessage.classList.toggle('message');
+  const resultMessage = document.querySelector('.results > .message');
+  const nextRoundButton = document.querySelector('.results > .next-round');
 
   resultMessage.textContent = message;
 
-  resultsDiv.appendChild(resultMessage);
+  nextRoundButton.addEventListener('click', reset);
 
-  const nextRoundButton = document.createElement('button')
   resultsDiv.classList.toggle('hidden');
 }
 
 function reset() {
   const resultsDiv = document.querySelector('.results');
-  const resultMessage = document.createElement('p');
-
-  resultsDiv.removeChild(resultMessage);
-
-  
+  resultsDiv.classList.toggle('hidden');
 
   loadRound();
 }
