@@ -23,14 +23,23 @@ function loadGame() {
 
 function loadRound() {
 
-  const gameButtons = document.querySelectorAll('.buttons > .game');
+  // const gameButtons = document.querySelectorAll('.buttons > .game');
   
-  gameButtons.forEach((button) => {
-    button.addEventListener('click', (e) => {
+  // gameButtons.forEach((button) => {
+  //   button.addEventListener('click', (e) => {
+  //     const playerChoice = e.target.id;
+  //     playRound(playerChoice);
+  //   }, {once: true})
+  // });
+
+  const buttons = document.querySelector('.buttons');
+
+  buttons.addEventListener('click', (e) => {
+    if(e.target.className === 'game') {
       const playerChoice = e.target.id;
       playRound(playerChoice);
-    })
-  });
+    }
+  })
 
   toggleGameButtons();
 }
@@ -60,30 +69,30 @@ function playRound(playerChoice) {
 
 
   if (player === computer) {
-      result = "draw";
-      message = `It's a draw. You both played ${player}`;
+    result = "draw";
+    message = `It's a draw. You both played ${player}`;
 
   } else {
 
-      let selectionsAsString = selections.toString();
+    let selectionsAsString = selections.toString();
 
-      switch (selectionsAsString) {
-        case "rock,scissors":
-        case "paper,rock":
-        case "scissors,paper":
-          result = "win";
-          message = `You win! ${player} beats ${computer}`;
-          break;
-
-        case "rock,paper":
-        case "paper,scissors":
-        case "scissors,rock":
-          result = "lose";
-          message = `You lose! ${computer} beats ${player}`;
-          break;
-    
-      default:
+    switch (selectionsAsString) {
+      case "rock,scissors":
+      case "paper,rock":
+      case "scissors,paper":
+        result = "win";
+        message = `You win! ${player} beats ${computer}`;
         break;
+
+      case "rock,paper":
+      case "paper,scissors":
+      case "scissors,rock":
+        result = "lose";
+        message = `You lose! ${computer} beats ${player}`;
+        break;
+  
+      default:
+      break;
     }
   }
 
@@ -99,7 +108,7 @@ function displayResults(message) {
 
   resultMessage.textContent = message;
 
-  nextRoundButton.addEventListener('click', reset);
+  nextRoundButton.addEventListener('click', reset, {once: true});
 
   resultsDiv.classList.toggle('hidden');
 }
@@ -129,7 +138,21 @@ function updateGame (result) {
     break;
   }
 
-  console.log(roundResult);
-  console.log(playerScore);
-  console.log(computerScore);
+  const playerScoreDisplay = document.querySelector('.player > .score');
+  const computerScoreDisplay = document.querySelector('.computer > .score');
+
+  playerScoreDisplay.textContent = playerScore;
+  computerScoreDisplay.textContent = computerScore;
+
+  if(playerScore === 5 || computerScore === 5) {
+
+    const nextRoundButton = document.querySelector('.results > .next-round');
+    nextRoundButton.classList.toggle('hidden');
+
+    if(playerScore === 5) {
+      console.log('YOU WIN!');
+    } else if(computerScore === 5) {
+      console.log('YOU LOSE!');
+    }
+  }
 }
