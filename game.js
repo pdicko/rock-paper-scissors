@@ -150,9 +150,38 @@ function updateGame (result) {
     nextRoundButton.classList.toggle('hidden');
 
     if(playerScore === 5) {
-      console.log('YOU WIN!');
+      endGame('win');
     } else if(computerScore === 5) {
-      console.log('YOU LOSE!');
+      endGame('lose');
     }
   }
+}
+
+function endGame(result) {
+
+  const containerDiv = document.querySelector('.container');
+
+  const finalResult = result;
+
+  const buttonsDiv = document.querySelector('.buttons');
+  const resultsDiv = document.querySelector('.results');
+
+  const endGameDiv = document.createElement('div');
+  const finalResultMessage = document.createElement('p')
+
+  endGameDiv.classList.toggle('end-game');
+  finalResultMessage.classList.toggle('final-result');
+
+  buttonsDiv.classList.toggle('hidden');
+  resultsDiv.classList.toggle('hidden');
+
+  if (finalResult === 'win' ) {
+    finalResultMessage.textContent = 'Congratulations. You win!';
+  } else if (finalResult === 'lose') {
+    finalResultMessage.textContent = 'Sorry. You lose!';
+  }
+
+  endGameDiv.appendChild(finalResultMessage);
+  containerDiv.appendChild(endGameDiv);
+  
 }
