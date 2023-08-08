@@ -1,5 +1,88 @@
+body {
+    margin: 0;
+    padding: 0, 75px;
+    font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+    background-color: #1f2937;
+}
 
+button {
+    border-style: none;
+    background-color: lightslategray;
+    color: aliceblue;
+    width: 100px;
+    height: 50px;
+    border-radius: 6px;
+    
+}
 
+.header {
+    text-align: center;
+    color: aliceblue;
+    font-size: 14px;
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 50px;
+}
+
+.score-box {
+    display: flex;
+    align-items: center;
+    gap: 150px;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    color: aliceblue;
+}
+
+.score-box > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 28px;
+    text-transform: uppercase;
+}
+
+.results { 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+    padding: 0;
+    color: aliceblue;
+}
+
+.end-game {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.final-result {
+    font-size: 24px;
+    font-weight: 500;
+    color: darksalmon;
+}
 
 /*Leave .hidden at bottom*/
 
